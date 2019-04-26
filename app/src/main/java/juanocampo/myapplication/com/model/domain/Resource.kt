@@ -10,7 +10,7 @@ class Resource<T>(val status: Status = Status.LOADING, info: T? = null, message:
             return Resource(status = Status.SUCCESS, info = data)
         }
 
-        fun <T> error(msg: String, @Nullable data: T): Resource<T> {
+        fun <T> error(msg: String, @Nullable data: T? = null): Resource<T> {
             return Resource(status = Status.ERROR, info = data, message = msg)
         }
 
