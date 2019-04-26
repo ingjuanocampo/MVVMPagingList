@@ -1,4 +1,4 @@
-package juanocampo.myapplication.com.model.sources.remote.di
+package juanocampo.myapplication.com.model.di
 
 import dagger.Module
 import dagger.Provides
@@ -14,7 +14,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class RemoteModule {
+class RepositoryModule {
 
     @Singleton
     @Provides
