@@ -21,5 +21,7 @@ class MovieDelegateAdapter : DelegateAdapter<MovieDelegateAdapter.ViewHolder, Mo
     class ViewHolder(viewGroup: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(viewGroup.context).inflate(R.layout.movie_item, viewGroup, false)) {
 
+
+
     }
 }
