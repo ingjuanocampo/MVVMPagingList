@@ -49,6 +49,7 @@
                     app:layout_constraintTop_toBottomOf="@id/title"/>
 
             <TextView
+                    android:id="@+id/ratting"
                     android:textStyle="bold"
                     android:textColor="@color/colorAccent"
                     android:text="8.5"

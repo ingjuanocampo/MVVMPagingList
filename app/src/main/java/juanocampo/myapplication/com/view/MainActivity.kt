@@ -1,8 +1,8 @@
-package juanocampo.myapplication.com
+package juanocampo.myapplication.com.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import juanocampo.myapplication.com.model.domain.Resource
+import juanocampo.myapplication.com.R
 
 class MainActivity : AppCompatActivity() {
 
