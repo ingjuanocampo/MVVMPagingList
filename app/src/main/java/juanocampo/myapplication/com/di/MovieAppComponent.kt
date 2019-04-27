@@ -6,6 +6,7 @@ import dagger.Component
 import juanocampo.myapplication.com.model.IRepository
 import juanocampo.myapplication.com.model.di.RepositoryModule
 
+@ApplicationScope
 @Component(modules = [RepositoryModule::class, ApplicationModule::class])
 interface MovieAppComponent {
 

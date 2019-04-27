@@ -1,5 +1,6 @@
 package juanocampo.myapplication.com.view.fragment
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import juanocampo.myapplication.com.R
 import juanocampo.myapplication.com.di.AndroidInjectorUtils
 import juanocampo.myapplication.com.view.adapter.MovieListAdapter
@@ -34,8 +36,27 @@ class MovieListFragment: Fragment() {
         movieList.adapter = adapter
 
         var viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MovieViewModel::class.java)
+        viewModel.fetchMoviesByPage()
 
+        viewModel.movieListLiveData.observe(this, Observer {
+            it?.let { items ->
+                adapter.addItems(items)
+            }
+        })
 
+        viewModel.loaderLiveData.observe(this, Observer {
+            it?.let { isLoading ->
+                if (isLoading) {
+                    adapter.addLoader()
+                }
+            }
+        })
+
+        viewModel.errorLiveData.observe(this, Observer {
+            it?.let { error ->
+                adapter.removeLoader()
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
-
 }

@@ -3,7 +3,7 @@ package juanocampo.myapplication.com.model.domain
 import android.support.annotation.Nullable
 
 
-class Resource<T>(val status: Status = Status.LOADING, info: T? = null, message: String = "") {
+class Resource<T>(val status: Status = Status.LOADING, val info: T? = null, val message: String = "") {
 
     companion object {
         fun <T> success(data: T): Resource<T> {
@@ -14,7 +14,7 @@ class Resource<T>(val status: Status = Status.LOADING, info: T? = null, message:
             return Resource(status = Status.ERROR, info = data, message = msg)
         }
 
-        fun <T> loading(@Nullable data: T): Resource<T> {
+        fun <T> loading(@Nullable data: T? = null): Resource<T> {
             return Resource(status = Status.LOADING, info = data)
         }
     }

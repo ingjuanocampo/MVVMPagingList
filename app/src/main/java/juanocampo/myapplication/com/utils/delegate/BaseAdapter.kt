@@ -18,9 +18,7 @@ open class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val viewType = items[position]
         val delegateAdapter = delegateAdapters.get(viewType.getViewType())
-        delegateAdapter?.let {
-            it.onBindViewHolder(holder, viewType)
-        }
+        delegateAdapter?.onBindViewHolder(holder, viewType)
     }
 
     override fun getItemViewType(position: Int) = items[position].getViewType()
@@ -35,5 +33,12 @@ open class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             items.addAll(updatedConversationMessages)
         }
         diffResult.dispatchUpdatesTo(this)
+    }
+
+
+    open fun addItem(itemToAdd: RecyclerViewType) {
+        val list = ArrayList<RecyclerViewType>()
+        list.add(itemToAdd)
+        addItems(list)
     }
 }

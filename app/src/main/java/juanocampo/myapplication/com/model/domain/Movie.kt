@@ -18,6 +18,7 @@ data class Movie(
 
     companion object {
         const val MOVIE_ITEM = "movie_delegate_item"
+        const val MOVIE_LOADER = "movie_delegate_item_loader"
     }
 
 }
