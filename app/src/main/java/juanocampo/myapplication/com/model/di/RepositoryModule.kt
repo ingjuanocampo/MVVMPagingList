@@ -33,7 +33,7 @@ class RepositoryModule {
 
     @ApplicationScope
     @Provides
-    fun providesMovieMapper() = MovieMapper( "http://image.tmdb.org/t/p/w185//")
+    fun providesMovieMapper() = MovieMapper( "https://image.tmdb.org/t/p/w185//")
 
     @Provides
     fun providesRepository(iRemoteDataSource: IRemoteDataSource, movieMapper: MovieMapper): IRepository =

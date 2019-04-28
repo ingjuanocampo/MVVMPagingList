@@ -18,6 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             <ImageView
+                    android:scaleType="centerCrop"
                     android:id="@+id/movie_image"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -39,13 +40,16 @@
             <TextView
                     style="@style/TextAppearance.AppCompat.Small"
                     android:id="@+id/description"
+                    android:maxLines="6"
+                    android:ellipsize="end"
                     tools:text="Some text here to show of description, this may have many lines of text "
                     android:layout_margin="@dimen/margin_normal"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/movie_image"
-                    app:layout_constraintTop_toBottomOf="@id/title"/>
+                    app:layout_constraintTop_toBottomOf="@id/title"
+            />
 
             <TextView
                     android:id="@+id/ratting"
@@ -56,6 +60,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/description"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
         </android.support.constraint.ConstraintLayout>
