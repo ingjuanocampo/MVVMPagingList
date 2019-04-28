@@ -15,8 +15,7 @@ class Repository(private val iRemoteDataSource: IRemoteDataSource,
                  private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO): IRepository {
 
 
-    private var pageRequested :Int = 0
-
+    @Synchronized
     override suspend fun requestMoviesByPage(page: Int): Resource<List<Movie>> {
         return withContext(ioDispatcher) {
             return@withContext fetchMoviesFromRemote(page)
@@ -25,9 +24,7 @@ class Repository(private val iRemoteDataSource: IRemoteDataSource,
 
     @WorkerThread
     private fun fetchMoviesFromRemote(page: Int): Resource<List<Movie>> {
-        if (pageRequested == page) {
-            return Resource.loading()
-        }
+
         return try {
             val fetchedItems = iRemoteDataSource.fetchMovies(page)
             if (fetchedItems.isNullOrEmpty()) {
@@ -38,8 +35,6 @@ class Repository(private val iRemoteDataSource: IRemoteDataSource,
             }
         } catch (e: Exception) {
             Resource.error(e.message?: "Something went wrong ")
-        } finally {
-            pageRequested = page
         }
     }
 }

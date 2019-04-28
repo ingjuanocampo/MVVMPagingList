@@ -31,6 +31,8 @@ open class BaseAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (updatedConversationMessages.isNullOrEmpty().not()) {
             items.clear()
             items.addAll(updatedConversationMessages)
+        } else {
+            items.clear()
         }
         diffResult.dispatchUpdatesTo(this)
     }
