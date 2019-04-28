@@ -1,17 +1,14 @@
 package juanocampo.myapplication.com.view.adapter
 
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import juanocampo.myapplication.com.R
 import juanocampo.myapplication.com.model.domain.Movie
 import juanocampo.myapplication.com.utils.delegate.DelegateAdapter
-import java.lang.Exception
 
 class MovieDelegateAdapter : DelegateAdapter<MovieDelegateAdapter.ViewHolder, Movie> {
 
@@ -32,16 +29,7 @@ class MovieDelegateAdapter : DelegateAdapter<MovieDelegateAdapter.ViewHolder, Mo
         val movieRatting = itemView.findViewById<TextView>(R.id.ratting)
 
         fun bind(movie: Movie) {
-            Picasso.get().load(movie.picPath).into(movieImage, object: Callback {
-                override fun onSuccess() {
-                    Log.e("MovieDelegateAdapter", " Success")
-                }
-
-                override fun onError(e: Exception?) {
-                    Log.e("MovieDelegateAdapter", e?.message + " path: $movie.picPath")
-                }
-
-            })
+            Picasso.get().load(movie.picPath).into(movieImage)
             movieDescription.text = movie.description
             movieRatting.text = movie.rating
             movieTitle.text = movie.name

@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,10 +29,13 @@ class MovieListFragment: Fragment() {
 
     private lateinit var adapter: MovieListAdapter
 
+    private lateinit var manager: LinearLayoutManager
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         AndroidInjectorUtils.inject(this)
-        movieList.layoutManager = LinearLayoutManager(context)
+        manager = LinearLayoutManager(context)
+        movieList.layoutManager = manager
         adapter = MovieListAdapter()
         movieList.adapter = adapter
 
@@ -44,19 +48,23 @@ class MovieListFragment: Fragment() {
             }
         })
 
-        viewModel.loaderLiveData.observe(this, Observer {
-            it?.let { isLoading ->
-                if (isLoading) {
-                    adapter.addLoader()
-                }
-            }
-        })
-
         viewModel.errorLiveData.observe(this, Observer {
             it?.let { error ->
-                adapter.removeLoader()
                 Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
             }
         })
+
+        movieList.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dy > 0) {
+                    if (manager.findLastVisibleItemPosition() >= adapter.items.size - 4) {
+                        viewModel.fetchMoviesByPage()
+                    }
+                }
+            }
+
+        })
+
     }
 }
