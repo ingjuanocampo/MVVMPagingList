@@ -2,6 +2,7 @@ package juanocampo.myapplication.com.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.support.annotation.UiThread
 import juanocampo.myapplication.com.model.IRepository
 import juanocampo.myapplication.com.model.domain.Movie
 import juanocampo.myapplication.com.model.domain.Resource
@@ -27,6 +28,7 @@ class MovieViewModel(private val iRepository: IRepository,
 
     private val items: ArrayList<RecyclerViewType> = ArrayList()
 
+    @UiThread
     fun fetchMoviesByPage() {
         GlobalScope.launch(mainDispatcher) {
             if (loaderLiveData.value != true) {
@@ -49,6 +51,7 @@ class MovieViewModel(private val iRepository: IRepository,
 
     }
 
+    @UiThread
     private fun handleSuccessCase(response: Resource<List<Movie>>) {
         items.remove(loaderItem)
         loaderLiveData.value = false
@@ -57,22 +60,26 @@ class MovieViewModel(private val iRepository: IRepository,
         }
     }
 
+    @UiThread
     private fun handleErrorCase(response: Resource<List<Movie>>) {
         loaderLiveData.value = false
         removeItemsAndNotify(loaderItem)
         errorLiveData.value = response.message
     }
 
+    @UiThread
     private fun addItemAndNotify(item: RecyclerViewType) {
         items.add(item)
         movieListLiveData.value = items
     }
 
+    @UiThread
     private fun addItemsAndNotify(itemsToAdd: List<RecyclerViewType>) {
         items.addAll(itemsToAdd)
         movieListLiveData.value = items
     }
 
+    @UiThread
     private fun removeItemsAndNotify(item: RecyclerViewType) {
         items.remove(item)
         movieListLiveData.value = items

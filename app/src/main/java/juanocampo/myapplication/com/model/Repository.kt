@@ -1,5 +1,6 @@
 package juanocampo.myapplication.com.model
 
+import android.support.annotation.WorkerThread
 import juanocampo.myapplication.com.model.domain.Movie
 import juanocampo.myapplication.com.model.domain.Resource
 import juanocampo.myapplication.com.model.sources.remote.IRemoteDataSource
@@ -22,6 +23,7 @@ class Repository(private val iRemoteDataSource: IRemoteDataSource,
         }
     }
 
+    @WorkerThread
     private fun fetchMoviesFromRemote(page: Int): Resource<List<Movie>> {
         if (pageRequested == page) {
             return Resource.loading()
