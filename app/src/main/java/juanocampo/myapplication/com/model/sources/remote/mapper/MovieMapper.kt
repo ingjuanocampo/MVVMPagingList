@@ -7,6 +7,9 @@ class MovieMapper(private val baseImageUrl: String): IMapper<List<MovieResponse>
 
     override fun mapResponseToAppModel(toParse: List<MovieResponse>): List<Movie> {
         val movieList = ArrayList<Movie>()
+        if (toParse.isEmpty()) {
+            return emptyList()
+        }
         toParse.forEach {
             movieList.add(it.toMovie(baseImageUrl))
         }

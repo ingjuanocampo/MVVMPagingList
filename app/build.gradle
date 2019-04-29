@@ -54,6 +54,7 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     testImplementation "junit:junit:$jUnitVersion"
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     api 'com.squareup.picasso:picasso:2.71828'
