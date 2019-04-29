@@ -34,7 +34,6 @@ class RemoteDataSourceTest {
 
     @Before
     fun setUp() {
-
         MockitoAnnotations.initMocks(this)
         whenever(api.fetchMovies(language = LANGUAGE, key = API_KEY, page = 0)).thenReturn(request)
         remoteDataSource = RemoteDataSource(api)

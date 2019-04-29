@@ -34,7 +34,7 @@ class Repository(private val iRemoteDataSource: IRemoteDataSource,
                 Resource.success(mappedItems)
             }
         } catch (e: Exception) {
-            Resource.error(e.message?: "Something went wrong ")
+            Resource.error(e.message?: "Something went wrong")
         }
     }
 }
