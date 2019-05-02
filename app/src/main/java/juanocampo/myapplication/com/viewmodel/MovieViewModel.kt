@@ -19,7 +19,7 @@ class MovieViewModel(
 
     val errorLiveData = MutableLiveData<String>()
     val movieListLiveData = MutableLiveData<ArrayList<RecyclerViewType>>()
-    private val loaderLiveData = MutableLiveData<Boolean>()
+    private var isLoading = false
     private var pageNumber = 1
     private val items: ArrayList<RecyclerViewType> = ArrayList()
 
@@ -37,8 +37,8 @@ class MovieViewModel(
     @Synchronized
     @WorkerThread
     private suspend fun syncRepository() {
-        if (loaderLiveData.value != true) {
-            loaderLiveData.postValue(true)
+        if (!isLoading) {
+            isLoading = true
             if (!items.contains(loaderItem)) {
                 addItemAndNotify(loaderItem)
             }
@@ -48,7 +48,8 @@ class MovieViewModel(
                 response.status == Status.SUCCESS -> {
                     handleSuccessCase(response)
                 }
-                response.status == Status.LOADING -> loaderLiveData.postValue(true)
+                response.status == Status.LOADING -> isLoading = true
+
                 else -> {
                     handleErrorCase(response)
                 }
@@ -59,7 +60,7 @@ class MovieViewModel(
     @WorkerThread
     private suspend fun handleSuccessCase(response: Resource<List<Movie>>) {
         items.remove(loaderItem)
-        loaderLiveData.postValue(false)
+        isLoading = false
         response.info?.let {
             addItemsAndNotify(it)
         }
@@ -68,33 +69,33 @@ class MovieViewModel(
 
     @WorkerThread
     private suspend fun handleErrorCase(response: Resource<List<Movie>>) {
-        loaderLiveData.postValue(false)
+        isLoading = false
         removeItemsAndNotify(loaderItem)
-        errorLiveData.postValue(response.message)
+        publishUIResults(errorLiveData, response.message)
     }
 
     @WorkerThread
     private suspend fun addItemAndNotify(item: RecyclerViewType) {
         items.add(item)
-        publishUIResults()
+        publishUIResults(movieListLiveData, items)
     }
 
     @WorkerThread
     private suspend fun addItemsAndNotify(itemsToAdd: List<RecyclerViewType>) {
         items.addAll(itemsToAdd)
-        publishUIResults()
+        publishUIResults(movieListLiveData, items)
     }
 
     @WorkerThread
     private suspend fun removeItemsAndNotify(item: RecyclerViewType) {
         items.remove(item)
-        publishUIResults()
+        publishUIResults(movieListLiveData, items)
     }
 
     @UiThread
-    private suspend fun publishUIResults() {
+    private suspend fun <T> publishUIResults(liveData: MutableLiveData<T>, data: T) {
         withContext(mainDispatcher) {
-            movieListLiveData.value = items
+            liveData.value = data
         }
     }
 }
