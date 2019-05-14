@@ -4,24 +4,30 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.UiThread
 import android.support.annotation.WorkerThread
-import juanocampo.myapplication.com.model.IRepository
-import juanocampo.myapplication.com.model.domain.Movie
-import juanocampo.myapplication.com.model.domain.Resource
-import juanocampo.myapplication.com.model.domain.Status
+import juanocampo.myapplication.com.data.IRepository
+import juanocampo.myapplication.com.data.domain.Movie
+import juanocampo.myapplication.com.data.domain.Resource
+import juanocampo.myapplication.com.data.domain.Status
 import juanocampo.myapplication.com.utils.delegate.model.RecyclerViewType
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 class MovieViewModel(
     private val iRepository: IRepository,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : ViewModel() {
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val job: Job = Job()
+) : ViewModel(), CoroutineScope {
+
+    override val coroutineContext: CoroutineContext
+        get() = job + ioDispatcher
 
     val errorLiveData = MutableLiveData<String>()
     val movieListLiveData = MutableLiveData<ArrayList<RecyclerViewType>>()
     private var isLoading = false
-    private var pageNumber = 1
     private val items: ArrayList<RecyclerViewType> = ArrayList()
+    private var pageNumber = 1
+
 
     private val loaderItem = object : RecyclerViewType {
         override fun getDelegateId() = Movie.MOVIE_LOADER.hashCode()
@@ -29,7 +35,7 @@ class MovieViewModel(
     }
 
     fun fetchMoviesByPage() {
-        GlobalScope.launch(ioDispatcher) {
+        launch {
             syncRepository()
         }
     }

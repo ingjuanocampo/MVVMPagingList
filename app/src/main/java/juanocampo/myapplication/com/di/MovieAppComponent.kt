@@ -3,8 +3,8 @@ package juanocampo.myapplication.com.di
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
-import juanocampo.myapplication.com.model.IRepository
-import juanocampo.myapplication.com.model.di.RepositoryModule
+import juanocampo.myapplication.com.data.IRepository
+import juanocampo.myapplication.com.data.di.RepositoryModule
 
 @ApplicationScope
 @Component(modules = [RepositoryModule::class, ApplicationModule::class])
@@ -20,4 +20,5 @@ interface MovieAppComponent {
         fun application(application: Application): Builder
 
         fun build(): MovieAppComponent
-    }}
+    }
+}

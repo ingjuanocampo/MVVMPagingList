@@ -1,15 +1,14 @@
-package juanocampo.myapplication.com.model.sources.remote
+package juanocampo.myapplication.com.data.sources.remote
 
-import juanocampo.myapplication.com.model.sources.remote.RemoteDataSource.Companion.API_KEY
-import juanocampo.myapplication.com.model.sources.remote.RemoteDataSource.Companion.LANGUAGE
-import juanocampo.myapplication.com.model.sources.remote.domain.MovieResponse
-import juanocampo.myapplication.com.model.sources.remote.domain.MoviesDBResponse
-import juanocampo.myapplication.com.model.sources.remote.service.MovieDBApi
+import juanocampo.myapplication.com.data.sources.remote.RemoteDataSource.Companion.API_KEY
+import juanocampo.myapplication.com.data.sources.remote.RemoteDataSource.Companion.LANGUAGE
+import juanocampo.myapplication.com.data.sources.remote.domain.MovieResponse
+import juanocampo.myapplication.com.data.sources.remote.domain.MoviesDBResponse
+import juanocampo.myapplication.com.data.sources.remote.service.MovieDBApi
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import retrofit2.Call

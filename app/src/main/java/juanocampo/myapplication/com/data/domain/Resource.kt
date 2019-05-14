@@ -1,4 +1,4 @@
-package juanocampo.myapplication.com.model.domain
+package juanocampo.myapplication.com.data.domain
 
 import android.support.annotation.Nullable
 

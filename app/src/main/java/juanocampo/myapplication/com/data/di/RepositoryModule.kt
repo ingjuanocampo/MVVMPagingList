@@ -1,14 +1,14 @@
-package juanocampo.myapplication.com.model.di
+package juanocampo.myapplication.com.data.di
 
 import dagger.Module
 import dagger.Provides
 import juanocampo.myapplication.com.di.ApplicationScope
-import juanocampo.myapplication.com.model.IRepository
-import juanocampo.myapplication.com.model.Repository
-import juanocampo.myapplication.com.model.sources.remote.IRemoteDataSource
-import juanocampo.myapplication.com.model.sources.remote.RemoteDataSource
-import juanocampo.myapplication.com.model.sources.remote.mapper.MovieMapper
-import juanocampo.myapplication.com.model.sources.remote.service.MovieDBApi
+import juanocampo.myapplication.com.data.IRepository
+import juanocampo.myapplication.com.data.Repository
+import juanocampo.myapplication.com.data.sources.remote.IRemoteDataSource
+import juanocampo.myapplication.com.data.sources.remote.RemoteDataSource
+import juanocampo.myapplication.com.data.sources.remote.mapper.MovieMapper
+import juanocampo.myapplication.com.data.sources.remote.service.MovieDBApi
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

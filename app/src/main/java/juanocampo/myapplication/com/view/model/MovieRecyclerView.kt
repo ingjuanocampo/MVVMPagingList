@@ -1,9 +1,9 @@
-package juanocampo.myapplication.com.model.domain
+package juanocampo.myapplication.com.view.model
 
 import juanocampo.myapplication.com.utils.delegate.model.RecyclerViewType
 
 
-data class Movie(
+data class MovieRecyclerView(
     val id: Int,
     val name: String = "",
     val rating: String = "",

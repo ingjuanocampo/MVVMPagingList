@@ -1,6 +1,6 @@
-package juanocampo.myapplication.com.model.sources.remote.service
+package juanocampo.myapplication.com.data.sources.remote.service
 
-import juanocampo.myapplication.com.model.sources.remote.domain.MoviesDBResponse
+import juanocampo.myapplication.com.data.sources.remote.domain.MoviesDBResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

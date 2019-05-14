@@ -1,10 +1,10 @@
-package juanocampo.myapplication.com.model
+package juanocampo.myapplication.com.data
 
 import android.support.annotation.WorkerThread
-import juanocampo.myapplication.com.model.domain.Movie
-import juanocampo.myapplication.com.model.domain.Resource
-import juanocampo.myapplication.com.model.sources.remote.IRemoteDataSource
-import juanocampo.myapplication.com.model.sources.remote.mapper.MovieMapper
+import juanocampo.myapplication.com.data.domain.Movie
+import juanocampo.myapplication.com.data.domain.Resource
+import juanocampo.myapplication.com.data.sources.remote.IRemoteDataSource
+import juanocampo.myapplication.com.data.sources.remote.mapper.MovieMapper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

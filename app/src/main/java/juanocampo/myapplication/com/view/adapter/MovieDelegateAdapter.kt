@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import juanocampo.myapplication.com.R
-import juanocampo.myapplication.com.model.domain.Movie
+import juanocampo.myapplication.com.data.domain.Movie
 import juanocampo.myapplication.com.utils.delegate.DelegateAdapter
 
 class MovieDelegateAdapter : DelegateAdapter<MovieDelegateAdapter.ViewHolder, Movie> {

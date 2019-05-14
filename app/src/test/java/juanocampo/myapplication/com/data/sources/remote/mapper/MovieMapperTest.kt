@@ -1,6 +1,6 @@
-package juanocampo.myapplication.com.model.sources.remote.mapper
+package juanocampo.myapplication.com.data.sources.remote.mapper
 
-import juanocampo.myapplication.com.model.sources.remote.domain.MovieResponse
+import juanocampo.myapplication.com.data.sources.remote.domain.MovieResponse
 import org.junit.Before
 
 import org.junit.Assert.*

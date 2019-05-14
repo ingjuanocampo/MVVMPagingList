@@ -1,7 +1,7 @@
-package juanocampo.myapplication.com.model.sources.remote.mapper
+package juanocampo.myapplication.com.data.sources.remote.mapper
 
-import juanocampo.myapplication.com.model.domain.Movie
-import juanocampo.myapplication.com.model.sources.remote.domain.MovieResponse
+import juanocampo.myapplication.com.data.domain.Movie
+import juanocampo.myapplication.com.data.sources.remote.domain.MovieResponse
 
 class MovieMapper(private val baseImageUrl: String): IMapper<List<MovieResponse>, List<Movie>> {
 

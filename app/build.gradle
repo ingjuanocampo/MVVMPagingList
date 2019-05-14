@@ -28,7 +28,7 @@ dependencies {
     def daggerVersion = '2.19'
     def mockitoVersion = '2.23.4'
     def jUnitVersion = '4.12'
-    def kotlinCoroutineVersion = '1.0.1'
+    def kotlinCoroutineVersion = '1.1.0'
 
 
     // ViewModel and LiveData
