@@ -1,4 +1,4 @@
-package juanocampo.myapplication.com.data.sources.remote.domain
+package juanocampo.myapplication.com.data.sources.remote.model
 
 import com.google.gson.annotations.SerializedName
 

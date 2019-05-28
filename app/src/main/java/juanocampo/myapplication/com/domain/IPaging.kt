@@ -3,8 +3,7 @@ package juanocampo.myapplication.com.domain
 import juanocampo.myapplication.com.data.domain.Resource
 import juanocampo.myapplication.com.view.model.MovieRecyclerView
 
-interface PagingUseCase {
+interface IPaging {
 
-    suspend fun getItemsByPage(): Resource<List<MovieRecyclerView>>
-
+    suspend operator fun invoke(): Resource<List<MovieRecyclerView>>
 }

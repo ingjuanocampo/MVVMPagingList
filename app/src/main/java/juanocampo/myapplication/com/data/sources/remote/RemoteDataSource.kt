@@ -1,6 +1,6 @@
 package juanocampo.myapplication.com.data.sources.remote
 
-import juanocampo.myapplication.com.data.sources.remote.domain.MovieResponse
+import juanocampo.myapplication.com.data.sources.remote.model.MovieResponse
 import juanocampo.myapplication.com.data.sources.remote.service.MovieDBApi
 
 class RemoteDataSource(private val api: MovieDBApi): IRemoteDataSource {

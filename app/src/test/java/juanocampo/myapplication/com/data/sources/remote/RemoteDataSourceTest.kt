@@ -2,8 +2,8 @@ package juanocampo.myapplication.com.data.sources.remote
 
 import juanocampo.myapplication.com.data.sources.remote.RemoteDataSource.Companion.API_KEY
 import juanocampo.myapplication.com.data.sources.remote.RemoteDataSource.Companion.LANGUAGE
-import juanocampo.myapplication.com.data.sources.remote.domain.MovieResponse
-import juanocampo.myapplication.com.data.sources.remote.domain.MoviesDBResponse
+import juanocampo.myapplication.com.data.sources.remote.model.MovieResponse
+import juanocampo.myapplication.com.data.sources.remote.model.MoviesDBResponse
 import juanocampo.myapplication.com.data.sources.remote.service.MovieDBApi
 import org.junit.Assert.*
 import org.junit.Before

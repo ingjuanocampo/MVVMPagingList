@@ -12,8 +12,6 @@ interface MovieAppComponent {
 
     fun provideApplication(): Application
 
-    fun provideRepository(): IRepository
-
     @Component.Builder
     interface Builder {
         @BindsInstance

@@ -30,7 +30,7 @@ class Repository(private val iRemoteDataSource: IRemoteDataSource,
             if (fetchedItems.isNullOrEmpty()) {
                 Resource.error("could not load info, try later")
             } else {
-                val mappedItems = iMapper.mapResponseToAppModel(fetchedItems)
+                val mappedItems = iMapper(fetchedItems)
                 Resource.success(mappedItems)
             }
         } catch (e: Exception) {

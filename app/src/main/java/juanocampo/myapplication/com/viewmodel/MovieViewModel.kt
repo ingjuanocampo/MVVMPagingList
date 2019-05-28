@@ -9,11 +9,11 @@ import juanocampo.myapplication.com.data.domain.Movie
 import juanocampo.myapplication.com.data.domain.Resource
 import juanocampo.myapplication.com.data.domain.Status
 import juanocampo.myapplication.com.utils.delegate.model.RecyclerViewType
+import juanocampo.myapplication.com.view.model.MovieRecyclerView
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class MovieViewModel(
-    private val iRepository: IRepository,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val job: Job = Job()
@@ -26,12 +26,11 @@ class MovieViewModel(
     val movieListLiveData = MutableLiveData<ArrayList<RecyclerViewType>>()
     private var isLoading = false
     private val items: ArrayList<RecyclerViewType> = ArrayList()
-    private var pageNumber = 1
 
 
     private val loaderItem = object : RecyclerViewType {
-        override fun getDelegateId() = Movie.MOVIE_LOADER.hashCode()
-        override fun getViewType() = Movie.MOVIE_LOADER.hashCode()
+        override fun getDelegateId() = MovieRecyclerView.MOVIE_LOADER.hashCode()
+        override fun getViewType() = MovieRecyclerView.MOVIE_LOADER.hashCode()
     }
 
     fun fetchMoviesByPage() {
@@ -40,7 +39,6 @@ class MovieViewModel(
         }
     }
 
-    @Synchronized
     @WorkerThread
     private suspend fun syncRepository() {
         if (!isLoading) {
@@ -49,17 +47,8 @@ class MovieViewModel(
                 addItemAndNotify(loaderItem)
             }
 
-            val response = iRepository.requestMoviesByPage(pageNumber)
-            when {
-                response.status == Status.SUCCESS -> {
-                    handleSuccessCase(response)
-                }
-                response.status == Status.LOADING -> isLoading = true
 
-                else -> {
-                    handleErrorCase(response)
-                }
-            }
+
         }
     }
 

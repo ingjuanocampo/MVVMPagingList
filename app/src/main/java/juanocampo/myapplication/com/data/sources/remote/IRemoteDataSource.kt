@@ -1,6 +1,6 @@
 package juanocampo.myapplication.com.data.sources.remote
 
-import juanocampo.myapplication.com.data.sources.remote.domain.MovieResponse
+import juanocampo.myapplication.com.data.sources.remote.model.MovieResponse
 import java.io.IOException
 
 
