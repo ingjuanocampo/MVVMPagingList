@@ -6,9 +6,9 @@ import juanocampo.myapplication.com.view.model.MovieRecyclerView
 
 class DomainMapper: IMapper<List<Movie>, List<MovieRecyclerView>> {
 
-    override fun invoke(toParse: List<Movie>): List<MovieRecyclerView> {
+    override operator fun invoke(toParse: List<Movie>): List<MovieRecyclerView> {
 
-        val movieList = ArrayList<Movie>()
+        val movieList = ArrayList<MovieRecyclerView>()
         if (toParse.isEmpty()) {
             return emptyList()
         }
@@ -19,6 +19,11 @@ class DomainMapper: IMapper<List<Movie>, List<MovieRecyclerView>> {
     }
 }
 
-private fun Movie.toMovieRecyclerView(): Movie {
-
+private fun Movie.toMovieRecyclerView(): MovieRecyclerView {
+    return MovieRecyclerView(id = this.id,
+        language = this.language,
+        description = this.description,
+        name = this.name,
+        picPath = this.picPath,
+        rating = this.rating)
 }

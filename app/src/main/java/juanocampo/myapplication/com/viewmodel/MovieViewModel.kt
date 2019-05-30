@@ -4,29 +4,26 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.UiThread
 import android.support.annotation.WorkerThread
-import juanocampo.myapplication.com.data.IRepository
-import juanocampo.myapplication.com.data.domain.Movie
-import juanocampo.myapplication.com.data.domain.Resource
 import juanocampo.myapplication.com.data.domain.Status
+import juanocampo.myapplication.com.domain.IPaging
 import juanocampo.myapplication.com.utils.delegate.model.RecyclerViewType
 import juanocampo.myapplication.com.view.model.MovieRecyclerView
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class MovieViewModel(
+    private val paging: IPaging,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private val job: Job = Job()
+    private var pagingJob: Job = Job()
 ) : ViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-        get() = job + ioDispatcher
+        get() = pagingJob + ioDispatcher
 
     val errorLiveData = MutableLiveData<String>()
-    val movieListLiveData = MutableLiveData<ArrayList<RecyclerViewType>>()
-    private var isLoading = false
+    val listLiveData = MutableLiveData<ArrayList<RecyclerViewType>>()
     private val items: ArrayList<RecyclerViewType> = ArrayList()
-
 
     private val loaderItem = object : RecyclerViewType {
         override fun getDelegateId() = MovieRecyclerView.MOVIE_LOADER.hashCode()
@@ -34,57 +31,35 @@ class MovieViewModel(
     }
 
     fun fetchMoviesByPage() {
-        launch {
-            syncRepository()
-        }
-    }
-
-    @WorkerThread
-    private suspend fun syncRepository() {
-        if (!isLoading) {
-            isLoading = true
-            if (!items.contains(loaderItem)) {
+        if (!pagingJob.isActive) {
+            pagingJob = launch {
                 addItemAndNotify(loaderItem)
+
+                val pageResult = paging()
+                when {
+                    pageResult.status == Status.SUCCESS -> {
+                        removeItemsAndNotify(loaderItem)
+                        addItemAndNotify(loaderItem)
+                    }
+                    else -> {
+                        removeItemsAndNotify(loaderItem)
+                        errorLiveData.postValue(pageResult.message)
+                    }
+                }
             }
-
-
-
         }
-    }
-
-    @WorkerThread
-    private suspend fun handleSuccessCase(response: Resource<List<Movie>>) {
-        items.remove(loaderItem)
-        isLoading = false
-        response.info?.let {
-            addItemsAndNotify(it)
-        }
-        pageNumber++
-    }
-
-    @WorkerThread
-    private suspend fun handleErrorCase(response: Resource<List<Movie>>) {
-        isLoading = false
-        removeItemsAndNotify(loaderItem)
-        publishUIResults(errorLiveData, response.message)
     }
 
     @WorkerThread
     private suspend fun addItemAndNotify(item: RecyclerViewType) {
         items.add(item)
-        publishUIResults(movieListLiveData, items)
-    }
-
-    @WorkerThread
-    private suspend fun addItemsAndNotify(itemsToAdd: List<RecyclerViewType>) {
-        items.addAll(itemsToAdd)
-        publishUIResults(movieListLiveData, items)
+        publishUIResults(listLiveData, items)
     }
 
     @WorkerThread
     private suspend fun removeItemsAndNotify(item: RecyclerViewType) {
         items.remove(item)
-        publishUIResults(movieListLiveData, items)
+        publishUIResults(listLiveData, items)
     }
 
     @UiThread
