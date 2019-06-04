@@ -3,11 +3,12 @@ package juanocampo.myapplication.com.domain.di
 import dagger.Module
 import dagger.Provides
 import juanocampo.myapplication.com.data.IRepository
+import juanocampo.myapplication.com.data.di.RepositoryModule
 import juanocampo.myapplication.com.domain.IPaging
 import juanocampo.myapplication.com.domain.Paging
 import juanocampo.myapplication.com.domain.mapper.DomainMapper
 
-@Module
+@Module(includes = [RepositoryModule::class])
 class DomainModule {
 
     @Provides

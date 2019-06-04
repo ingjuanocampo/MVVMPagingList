@@ -6,7 +6,7 @@ import juanocampo.myapplication.com.domain.di.DomainModule
 import juanocampo.myapplication.com.view.fragment.MovieListFragment
 
 @MovieListScope
-@Component(dependencies = [MovieAppComponent::class], modules = [MovieListModule::class, DomainModule::class])
+@Component(dependencies = [MovieAppComponent::class], modules = [MovieListModule::class])
 interface MovieViewComponent {
 
     fun inject(fragment: MovieListFragment)

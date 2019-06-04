@@ -15,11 +15,11 @@ class MovieViewModel(
     private val paging: IPaging,
     private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
-    private var pagingJob: Job = Job()
+    private var pagingJob: Job? = null
 ) : ViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-        get() = pagingJob + ioDispatcher
+        get() = ioDispatcher
 
     val errorLiveData = MutableLiveData<String>()
     val listLiveData = MutableLiveData<ArrayList<RecyclerViewType>>()
@@ -31,7 +31,7 @@ class MovieViewModel(
     }
 
     fun fetchMoviesByPage() {
-        if (!pagingJob.isActive) {
+        if (pagingJob == null || pagingJob?.isCompleted == true) {
             pagingJob = launch {
                 addItemAndNotify(loaderItem)
 
@@ -39,7 +39,9 @@ class MovieViewModel(
                 when {
                     pageResult.status == Status.SUCCESS -> {
                         removeItemsAndNotify(loaderItem)
-                        addItemAndNotify(loaderItem)
+                        pageResult.info?.let {
+                            addItemsAndNotify(it)
+                        }
                     }
                     else -> {
                         removeItemsAndNotify(loaderItem)
@@ -49,6 +51,13 @@ class MovieViewModel(
             }
         }
     }
+
+    @WorkerThread
+    private suspend fun addItemsAndNotify(itemsToadd: List<MovieRecyclerView>) {
+        items.addAll(itemsToadd)
+        publishUIResults(listLiveData, items)
+    }
+
 
     @WorkerThread
     private suspend fun addItemAndNotify(item: RecyclerViewType) {
