@@ -1,8 +1,7 @@
 package juanocampo.myapplication.com.data
 
 import android.support.annotation.WorkerThread
-import juanocampo.myapplication.com.data.domain.Movie
-import juanocampo.myapplication.com.data.domain.Resource
+import juanocampo.myapplication.com.data.domain.RepositoryStates
 import juanocampo.myapplication.com.data.sources.remote.IRemoteDataSource
 import juanocampo.myapplication.com.data.sources.remote.mapper.MovieMapper
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,25 +15,25 @@ class Repository(private val iRemoteDataSource: IRemoteDataSource,
 
 
     @Synchronized
-    override suspend fun requestMoviesByPage(page: Int): Resource<List<Movie>> {
+    override suspend fun requestMoviesByPage(page: Int): RepositoryStates {
         return withContext(ioDispatcher) {
             return@withContext fetchMoviesFromRemote(page)
         }
     }
 
     @WorkerThread
-    private fun fetchMoviesFromRemote(page: Int): Resource<List<Movie>> {
+    private fun fetchMoviesFromRemote(page: Int): RepositoryStates {
 
         return try {
             val fetchedItems = iRemoteDataSource.fetchMovies(page)
             if (fetchedItems.isNullOrEmpty()) {
-                Resource.error("could not load info, try later")
+                RepositoryStates.Error("could not load info, try later")
             } else {
                 val mappedItems = iMapper(fetchedItems)
-                Resource.success(mappedItems)
+                RepositoryStates.Success(mappedItems)
             }
         } catch (e: Exception) {
-            Resource.error(e.message?: "Something went wrong")
+            RepositoryStates.Error(e.message?: "Something went wrong")
         }
     }
 }

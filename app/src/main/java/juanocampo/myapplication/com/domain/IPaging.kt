@@ -1,9 +1,8 @@
 package juanocampo.myapplication.com.domain
 
-import juanocampo.myapplication.com.data.domain.Resource
-import juanocampo.myapplication.com.view.model.MovieRecyclerView
+import juanocampo.myapplication.com.domain.domain.PagingStates
 
 interface IPaging {
 
-    suspend operator fun invoke(): Resource<List<MovieRecyclerView>>
+    suspend operator fun invoke(): PagingStates
 }

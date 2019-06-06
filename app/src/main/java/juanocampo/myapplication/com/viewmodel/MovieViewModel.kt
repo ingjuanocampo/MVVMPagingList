@@ -4,8 +4,9 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.UiThread
 import android.support.annotation.WorkerThread
-import juanocampo.myapplication.com.data.domain.Status
+import android.util.Log
 import juanocampo.myapplication.com.domain.IPaging
+import juanocampo.myapplication.com.domain.domain.PagingStates
 import juanocampo.myapplication.com.utils.delegate.model.RecyclerViewType
 import juanocampo.myapplication.com.view.model.MovieRecyclerView
 import kotlinx.coroutines.*
@@ -35,17 +36,15 @@ class MovieViewModel(
             pagingJob = launch {
                 addItemAndNotify(loaderItem)
 
-                val pageResult = paging()
-                when {
-                    pageResult.status == Status.SUCCESS -> {
+                when (val pageResult = paging()) {
+                    is PagingStates.Error -> {
                         removeItemsAndNotify(loaderItem)
-                        pageResult.info?.let {
-                            addItemsAndNotify(it)
-                        }
+                        errorLiveData.postValue(pageResult.error)
                     }
-                    else -> {
+                    is PagingStates.SuccessPage -> {
                         removeItemsAndNotify(loaderItem)
-                        errorLiveData.postValue(pageResult.message)
+                        addItemsAndNotify(pageResult.newItems)
+                        Log.d(MovieViewModel::class.simpleName, "Paged: ${pageResult.lastPaged}")
                     }
                 }
             }
