@@ -42,7 +42,7 @@ class MovieListFragment: Fragment() {
         var viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MovieViewModel::class.java)
         viewModel.fetchMoviesByPage()
 
-        viewModel.movieListLiveData.observe(this, Observer {
+        viewModel.listLiveData.observe(this, Observer {
             it?.let { items ->
                 adapter.addItems(items)
             }

@@ -7,16 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import juanocampo.myapplication.com.R
-import juanocampo.myapplication.com.model.domain.Movie
 import juanocampo.myapplication.com.utils.delegate.DelegateAdapter
+import juanocampo.myapplication.com.view.model.MovieRecyclerView
 
-class MovieDelegateAdapter : DelegateAdapter<MovieDelegateAdapter.ViewHolder, Movie> {
+class MovieDelegateAdapter : DelegateAdapter<MovieDelegateAdapter.ViewHolder, MovieRecyclerView> {
 
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
         return ViewHolder(parent)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, viewType: Movie) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, viewType: MovieRecyclerView) {
         viewHolder.bind(viewType)
     }
 
@@ -28,7 +28,7 @@ class MovieDelegateAdapter : DelegateAdapter<MovieDelegateAdapter.ViewHolder, Mo
         val movieTitle = itemView.findViewById<TextView>(R.id.title)
         val movieRatting = itemView.findViewById<TextView>(R.id.ratting)
 
-        fun bind(movie: Movie) {
+        fun bind(movie: MovieRecyclerView) {
             Picasso.get().load(movie.picPath).into(movieImage)
             movieDescription.text = movie.description
             movieRatting.text = movie.rating
